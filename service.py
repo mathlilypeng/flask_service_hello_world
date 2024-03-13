@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 import logging
 
+# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
+# called `app` in `main.py`.
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -17,4 +19,7 @@ def process_string():
         return jsonify({"result": result_string})
 
 if __name__ == '__main__':
+    # Used when running locally only. When deploying to Google App
+    # Engine, a webserver process such as Gunicorn will serve the app. This
+    # can be configured by adding an `entrypoint` to app.yaml.
     app.run(debug=True)
